@@ -1,6 +1,18 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+var mysql = require('mysql');
+
+/**
+ * Connect DB
+ */
+var conn = mysql.createConnection({
+    host: 'localhost',
+    user: '',
+    password: '',
+    database: ''
+});
+
 
 const init = async () => {
 
@@ -9,6 +21,9 @@ const init = async () => {
         host: 'localhost',
     });
 
+    /**
+     * Manage Route
+     */
     server.route({
         method: 'GET',
         path: '/',
@@ -17,15 +32,33 @@ const init = async () => {
             return 'Hello World!';
         }
     });
+    server.route({
+        method: 'GET',
+        path: '/hello/{name}',
+        handler: function (request, h) {
 
+            const name = request.params.name;
+            return 'Hello ' + name
+        }
+    })
+
+    /**
+     * Start server
+     */
     await server.start();
     console.log('Server running on %s', server.info.uri);
 };
 
-process.on('unhandledRejection', (err) => {
+/**
+ * Close server
+ */
+process.on('SIGINT', function () {
+    console.log('stopping hapi server')
 
-    console.log(err);
-    process.exit(1);
-});
+    server.stop({ timeout: 10000 }).then(function (err) {
+        console.log('hapi server stopped')
+        process.exit((err) ? 1 : 0)
+    })
+})
 
 init();
