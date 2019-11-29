@@ -15,7 +15,7 @@ var conn = mysql.createConnection({
     user: 'root',
     port: '3306',
     password: 't,JKa9R5ODA0vld5N',
-    database: 'talentTrate',
+    database: 'talent_rate_djer',
 });
 conn.connect();
 /**
@@ -82,6 +82,15 @@ app.delete('/promotions/:id', (req, res) => {
         res.send('Promotion supprimée avec succès');
     })
 })
+/**
+ * Route cours
+ */
+app.get('/cours', (req, res) => {
+    conn.query(`SELECT * from cours`, (error, results, fields) => {
+        if (error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
 
 
 /**
