@@ -91,8 +91,17 @@ app.get('/cours', (req, res) => {
         res.send(JSON.stringify(results));
     });
 });
-
-
+app.post('/cours', (req, res) => {
+    let libelle = req.body.libelle;
+    let beaginDate = req.body.beaginDate;
+    let endDate = req.body.endDate;
+    let formateurId = req.body.formateurId;
+    let promotionId = req.body.promotionId;
+    conn.query(`INSERT INTO cours (libelle, dateDebut, dateFin, formateur_id, promotion_id) VALUES ('${libelle}', '${beaginDate}', '${endDate}', ${formateurId}, ${promotionId})`, (error, results, fields) => {
+        if (error) throw error;
+        res.send('cour ajouté');
+    });
+});
 /**
  * Start server
  */
