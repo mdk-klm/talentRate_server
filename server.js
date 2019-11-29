@@ -1,64 +1,34 @@
-'use strict';
-
-const Hapi = require('@hapi/hapi');
-var mysql = require('mysql');
+const mysql = require('mysql');
+const express = require('express');
+const app = express();
 
 /**
  * Connect DB
  */
 var conn = mysql.createConnection({
     host: 'localhost',
-    user: '',
-    password: '',
-    database: ''
+    user: 'root',
+    port: '3306',
+    password: '21031992Hanna',
+    database: 'talentTrate',
 });
-
-
-const init = async () => {
-
-    const server = Hapi.server({
-        port: 3000,
-        host: 'localhost',
-    });
-
-    /**
-     * Manage Route
-     */
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-
-            return 'Hello World!';
-        }
-    });
-    server.route({
-        method: 'GET',
-        path: '/hello/{name}',
-        handler: function (request, h) {
-
-            const name = request.params.name;
-            return 'Hello ' + name
-        }
-    })
-
-    /**
-     * Start server
-     */
-    await server.start();
-    console.log('Server running on %s', server.info.uri);
-};
+conn.connect();
 
 /**
- * Close server
+ * Routes
  */
-process.on('SIGINT', function () {
-    console.log('stopping hapi server')
-
-    server.stop({ timeout: 10000 }).then(function (err) {
-        console.log('hapi server stopped')
-        process.exit((err) ? 1 : 0)
-    })
+app.get('/', function (req, res) {
+    res.send('Hello World')
+});
+app.get('/test', function (req, res) {
+    conn.query('SELECT name FROM PARCOURS_PEDAGOGIQUE', function (error, results, fields) {
+        if (error) throw error;
+        res.send(JSON.stringify({ results }));
+    });
 })
 
-init();
+/**
+ * Start server
+ */
+app.listen(3000);
+console.log('Server running on port : 3000');
