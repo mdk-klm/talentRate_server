@@ -15,17 +15,17 @@ node server.js
 List Parcours : 
   - /parcours GET
   - /parcours/:id GET Find By ID
-  - /parcours POST
+  - /parcours POST create parcour
   - /parcours/:id DELETE
   
  List Promotions : 
   - /promotions GET
   - /promotions/:id GET Find By ID
-  - /promotions POST
+  - /promotions POST create promotion
   - /promotions/:id DELETE
   
  List Cours :
   - /cours GET
   - /cours/:id GET Find By ID
-  - /cours POST
+  - /cours POST create cour
   - /cours/:id DELETE
