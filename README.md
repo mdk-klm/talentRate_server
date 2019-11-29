@@ -153,5 +153,7 @@ ALTER TABLE `promotion`
 
 ADD CONSTRAINT `FK_parcourt_pedagogique_id` FOREIGN KEY (`parcours_pedagogique_id`) REFERENCES `parcours_pedagogique` (`id`);
 
+Les routes présentes : Create, Read, Update, Delete pour les tables promotion et parcours_pedagogique.
+
 COMMIT;
 ~~~~
