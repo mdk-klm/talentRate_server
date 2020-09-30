@@ -1,5 +1,5 @@
 # Welcome to talentRate_server !
-**Talent rate server** is a restfull API 
+**Talent rate server** is a restfull API !
 
 
 # Initialisation
